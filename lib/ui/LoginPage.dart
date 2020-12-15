@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:chat/redux/actions/allActions.dart';
 import 'package:chat/redux/actions/action.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:chat/redux/models/app_state.dart';
@@ -80,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                           decoration: InputDecoration(
                             hintText: 'Email',
                             hintStyle: TextStyle(color: Colors.white),
-                            errorStyle: TextStyle(color: Colors.black),
+                            errorStyle: TextStyle(color: Colors.red),
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 15, horizontal: 30),
                             enabledBorder: OutlineInputBorder(
@@ -96,10 +97,12 @@ class _LoginPageState extends State<LoginPage> {
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                           ),
                           validator: (value) {
+                            
                               if (value.isEmpty) {
                                 return 'Required';
                               }
-                              if(RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$').hasMatch(value)){
+                              if(!EmailValidator.validate(value)){
+                                
                                 return 'Enter a valid email';
                               }
                               return null;
@@ -113,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                           decoration: InputDecoration(
                             hintText: 'Password',
                             hintStyle: TextStyle(color: Colors.white),
-                            errorStyle: TextStyle(color: Colors.black),
+                            errorStyle: TextStyle(color: Colors.red),
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 15, horizontal: 30),
                             enabledBorder: OutlineInputBorder(
